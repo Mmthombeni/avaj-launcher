@@ -4,19 +4,18 @@ import aircrafts.AircraftFactory;
 import interfaces.Flyable;
 import weather.WeatherTower;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class Simulator {
     private static WeatherTower weatherTower;
+    public static PrintWriter writeToFile;
     private static List<Flyable> flyables = new ArrayList<>();
     public static void main (String[] arg) throws InterruptedException{
         try {
+            writeToFile = new PrintWriter(new File("simulation.txt"));
             BufferedReader reader = new BufferedReader(new FileReader(arg[0])); //creates buffered reader which will read
             String line = reader.readLine(); //assigns what was read to line
             if (line != null) {
@@ -72,7 +71,7 @@ public class Simulator {
         catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Specify simulation file");
         }finally {
-           // Logger.getLogger().close();
+           writeToFile.close();
         }
     }
 
